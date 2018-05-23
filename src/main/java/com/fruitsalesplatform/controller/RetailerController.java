@@ -36,6 +36,27 @@ public class RetailerController extends BaseController {
     
     model.addAttribute("list",retailersList);
     
+    //当前页数
+    model.addAttribute("currentPage",retailer.getCurrentPage());
+    
+    //当前请求页数，默认为0
+    model.addAttribute("startPage", retailer.getStartPage());
+    
+    int countNumber = retailerService.count(map);
+    
+    //数据总和
+    model.addAttribute("countNumber", countNumber);
+    
+    int pageSize  = retailer.getPageSize();
+    
+    //每页数据，默认为10
+    model.addAttribute("pageSize", pageSize);
+    
+    //总页数
+    int sumPageNumber = countNumber%pageSize==0?(countNumber/pageSize):((countNumber/pageSize)+1);
+    
+    model.addAttribute("sumPageNumber", sumPageNumber);
+    
     return "/retailer/retailerHome.jsp";
   }
 
