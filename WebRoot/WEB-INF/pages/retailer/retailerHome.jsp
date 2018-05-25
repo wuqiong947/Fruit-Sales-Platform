@@ -29,6 +29,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			text-decoration: none;
 			color: #ffffff;
 		}
+		
+		 a:link { text-decoration: none;color: blue}
+		　a:active { text-decoration:blink}
+		　a:hover { text-decoration:underline;color: red} 
+		　a:visited { text-decoration: none;color: green}
 	</style>
 	
 	<script type="text/javascript">
@@ -89,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 				var startPageElement = document.getElementById("startPage");
 				
-				startPageElement.value = startPageElement.value+pageSize;
+				startPageElement.value =  parseInt(startPageElement.value)+pageSize;
 				
 				document.getElementById("listForm").submit();
 				
@@ -98,21 +103,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		
 		function toLocationPage(){
+			
+			//开始查找数据的位置
+			var pageSize = parseInt(document.getElementById("pageSize").value);
 		
-			var pageNumber = document.getElementById("pageNumber").value;
+			//随机跳转输入框中用户输入的值
+			var pageNumberElement =  document.getElementById("pageNumber");
 		
+			var pageNumber = parseInt(pageNumberElement.value);
+			//保存当前页码的节点
 			var currentPageElement = document.getElementById("currentPage");
 			
 			var currentPage = parseInt(currentPageElement.value);
 			
+			//保存总页数的节点
 			var sumPageNumberElement = document.getElementById("sumPageNumber");
 		
 			var sumPageNumber = parseInt(sumPageNumberElement.value);
 		
-			if(pageNumber==null||pageNumber==""){
+			if(pageNumberElement==null||pageNumberElement==""){
 				alert("请输入页码");
 			}else{
-				pageNumber = parseInt(pageNumber);
+				
 				if(pageNumber<1){
 					alert("到顶了");
 				}else if(pageNumber>sumPageNumber){
@@ -122,7 +134,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					var startPageElement = document.getElementById("startPage");
 				
-					startPageElement.value = pageSize*(pageNumber-1);
+					startPageElement.value = pageSize*(pageNumber)-9;
 					
 					document.getElementById("listForm").submit();
 				
@@ -137,12 +149,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body onload="init()">
     <%@include file="../menu.jsp" %><br>
     
-    <form action="<%=path %>/retailer/list.action" method="post" id="listForm">
+    <form action="<%=path %>/retailer/list.action" method="post"  id="listForm">
     	姓名：<input type="text" name="name" style="width: 120px;" />
     	手机：<input type="text" name="telephone" style="width: 120px;" />
     	地址：<input type="text" name="address" style="width: 120px;" /><br><br>
     	状态：<select id="indexStatus" onchange="changeStatus()">
-    			<option value="-1" selected="selected" >全部</option>
+    			<option value="-1" selected="selected">全部</option>
     			<option value="1" >启用</option>
     			<option value="0" >停用</option>
     		</select>
@@ -163,7 +175,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </form>
     
     <hr style="margin-top: 10px;">
-    
     
     
     <c:if test="${list!=null }">
@@ -195,9 +206,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	 </c:if>
     	 
     	 <dir style="margin-top: 10px;">
-    	 	<a onclick="toPrePage()">上一页</a>|<a onclick="toNextPage()">下一页</a>
+    	 	<a href="javascript:;" onclick="toPrePage()">上一页</a>|<a href="javascript:;" onclick="toNextPage()">下一页</a>
     	 	<input type="text" id="pageNumber" style="width: 50px"><button onclick="toLocationPage()">go</button>
-    		<div id="pageInfo"></div>
+    	 	<div id="pageInfo"></div>
     	 </dir>
     </c:if>
   </body>
