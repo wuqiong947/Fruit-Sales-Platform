@@ -1,55 +1,56 @@
 package com.fruitsalesplatform.entity;
 
 public class User {
-	private String userId;
-	
-	private String userName;
-	
-	private String password;
-	
-	private String name;
-	
-	private String telephone;
+  private String userId;
 
-	public String getUserid() {
-		return userId;
-	}
+  private String userName;
 
-	public void setUserid(String userid) {
-		this.userId = userid;
-	}
+  private String password;
 
-	public String getUsername() {
-		return userName;
-	}
+  private String name;
 
-	public void setUsername(String username) {
-		this.userName = username;
-	}
+  private String telephone;
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+  public String getUserId() {
+    return userId;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getUserName() {
+    return userName;
+  }
 
-	public String getTelephone() {
-		return telephone;
-	}
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getTelephone() {
+    return telephone;
+  }
+
+  public void setTelephone(String telephone) {
+    this.telephone = telephone;
+  }
+
+
 }

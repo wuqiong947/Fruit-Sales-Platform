@@ -48,7 +48,7 @@
 				onsubmit="return validate()">
 				用户名<input type="text" id="username" name="userName"
 					style="width:190px;height:26px;margin-left:39px;"><br>
-				密码<input type="text" id="password" name="password"
+				密码<input type="password" id="password" name="password"
 					style="width:190px;height:26px;margin-left:55px;"><br>
 				<input type="submit" value="登陆"
 					style="width:50px;height:30px;margin-top:8px;"> <a
