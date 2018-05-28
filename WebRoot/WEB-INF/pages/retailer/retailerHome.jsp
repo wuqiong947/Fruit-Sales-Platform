@@ -12,6 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <title>零售商管理</title>
     
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -34,8 +35,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		　a:active { text-decoration:blink}
 		　a:hover { text-decoration:underline;color: red} 
 		　a:visited { text-decoration: none;color: green}
+		
+		
+		.c{
+			border-style: solid; 
+			width:200px;
+			height:130px;
+			margin:4 23 0 23;
+			border-redius:5;
+			display:block;
+			background:#fff;
+			margin:10% auto;
+		}
+		
+		.mask{
+		
+			width:100%;
+			height:100%
+			position absolute;
+			background:rgba(0,0,0 .3);
+			display:none;
+		}
+		
+		
 	</style>
 	
+	<script typet="text/javascript" src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		function changeStatus(){
 			var status = document.getElementById("indexStatus").value;		
@@ -138,10 +163,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					document.getElementById("listForm").submit();
 				
+				}	
+			}
+		}
+		
+		function editRetailer(id){
+			
+			var message = "{'id':'"+id+"''}";
+			
+			$.ajax({
+				
+				type:'POST',
+				url:'<%=path %>/retailer/queryEditRetailer.action',
+				contentType:'application/json;charset=utf-8',
+				data:message,//数据格式是json
+				
+				//返回的时json结果
+				success:function(data){
+					$("#retailerId").val(data["retailerId"]);
+					$("#editName").val(data["name"]);
+					$("#editTelephone").val(data["telephone"]);
+					$("#editAddress").val(data["address"]);
+					$("#eStatus").val(data["status"]);
+					$("#editStatus").val(data["status"]);
+					
+					//从本页面抽取分页信息
+					$("#eCurrentPage").val($("#currentPage").val());
+					$("#eStartPage").val($("#startPage").val());
+					$("#ePageSize").val($("#pageSize").val());
 				}
 				
 				
-			}
+			});
+			
+		}
+		
+		function cancelEdit(){
+			$(".mask").css("display","none");
+		}
+		
+		
+		function changeEditStatus(){
+			
+			var status = $(".eStatus").val();
+			
+			$(".editStatus").val(status);
+			
 		}
 	</script>
   </head>
@@ -196,7 +263,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     					<font color="red">停用</font>
     				</c:if></td>
     				<td>${item.createTime}</td>
-    				<td><a>编辑</a>|<a>删除</a></td>
+    				<td><a onclick="editRetailer('${item.retailerId}')">编辑</a>|<a>删除</a></td>
     			</tr>
     		</c:forEach>
     	</table>
@@ -209,7 +276,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	 	<a href="javascript:;" onclick="toPrePage()">上一页</a>|<a href="javascript:;" onclick="toNextPage()">下一页</a>
     	 	<input type="text" id="pageNumber" style="width: 50px"><button onclick="toLocationPage()">go</button>
     	 	<div id="pageInfo"></div>
+    	 	
     	 </dir>
     </c:if>
+    
+    
+    
+    <!-- 在编辑零售商时弹出的控件 -->
+    <div class="mask">
+    	<div class="c">
+    		<div style="background-color:#173e65;height:20px;color:#fff;font-size:12px;padding-left:7px;">
+    			修改零售商信息  	<font style="float:right;padding-right:10px; " onclick="cancelEdit()">X</font>
+    		</div>
+    		<form id="editForm" action="<%=path %>/retailer/edit.action">
+    			<label>姓名：</label><input type="text" id="editName" name="name" style="width:120px" /><br>
+    			<label>手机：</label><input type="text" id="editTelephone" name="telephone" style="width:120px" /><br>
+    			<label>地址：</label><input type="text" id="editAddress" name="address" style="width:120px" /><br>
+    			<label>状态：</label>
+    			<select id="eStatus" onchange="changeEditStatus()">
+    				<option value="1">启用</option>
+    				<option value="0">停用</option>
+    			</select>
+    			
+    			<input type="hidden" id="retailerId" name="retailerId" />
+    			<input type="hidden" id="editStatus" name="status" />
+    			<input type="hidden" id="eCurrentPage" name="eCurrentPage" />
+    			<input type="hidden" id="eStartPage" name="eStartPage" />
+    			<input type="hidden" id="ePageSize" name="ePageSize" />
+    			
+    			<input type="submit" value="提交" style="background-color:#173e65;color:#ffffff; width:70px;" />
+    		</form>
+    		
+    	</div>
+    </div>
+    
   </body>
 </html>
