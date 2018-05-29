@@ -91,7 +91,7 @@ public abstract class BaseDaoImpl<T> extends SqlSessionDaoSupport implements Bas
   @Override
   public void deleteById(Serializable id) {
     // TODO Auto-generated method stub
-    this.getSqlSession().delete(ns+".delectById",id);
+    this.getSqlSession().delete(ns+".deleteById",id);
   }
 
   /**
