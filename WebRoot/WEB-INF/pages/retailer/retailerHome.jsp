@@ -169,7 +169,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		
 		function editRetailer(id){
 			
-			var message = "{'id':'"+id+"''}";
+			var message = "{'id':'"+id+"'}";
 			
 			$.ajax({
 				
@@ -187,6 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#eStatus").val(data["status"]);
 					$("#editStatus").val(data["status"]);
 					
+					$(".mask").css("display","block");
 					//从本页面抽取分页信息
 					$("#eCurrentPage").val($("#currentPage").val());
 					$("#eStartPage").val($("#startPage").val());
@@ -247,8 +248,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <c:if test="${list!=null }">
     	<table style="margin-top: 10px;width: 700px;text-align:center;" border=1 >    	
     		<tr>
-    			<td>序号</td><td>姓名</td><td>手机号</td><td>地址</td>
-    			<td>状态</td><td>创建时间</td><td>操作</td>
+    			<th>序号</th><th>姓名</th><th>手机号</th><th>地址</th>
+    			<th>状态</th><th>创建时间</th><th>操作</th>
     		</tr>
     		<c:forEach items="${list }" var="item" varStatus="status">
     			<tr>
@@ -263,7 +264,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     					<font color="red">停用</font>
     				</c:if></td>
     				<td>${item.createTime}</td>
-    				<td><a onclick="editRetailer('${item.retailerId}')">编辑</a>|<a>删除</a></td>
+    				<td><a  href="javascript:;" onclick="editRetailer('${item.retailerId}')">编辑</a>|<a  href="javascript:;" >删除</a></td>
     			</tr>
     		</c:forEach>
     	</table>
@@ -288,7 +289,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<div style="background-color:#173e65;height:20px;color:#fff;font-size:12px;padding-left:7px;">
     			修改零售商信息  	<font style="float:right;padding-right:10px; " onclick="cancelEdit()">X</font>
     		</div>
-    		<form id="editForm" action="<%=path %>/retailer/edit.action">
+    		<form id="editForm" action="<%=path %>/retailer/edit.action" method="POST">
     			<label>姓名：</label><input type="text" id="editName" name="name" style="width:120px" /><br>
     			<label>手机：</label><input type="text" id="editTelephone" name="telephone" style="width:120px" /><br>
     			<label>地址：</label><input type="text" id="editAddress" name="address" style="width:120px" /><br>
