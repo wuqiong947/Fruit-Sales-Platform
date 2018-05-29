@@ -22,13 +22,29 @@ public class RetailerController extends BaseController {
     @Resource
     RetailerService retailerService;
 
+    @RequestMapping("/retailer/edit.action")
+    public String edit(Model model, Retailer retailer) {
+
+        retailerService.update(retailer);
+
+        Retailer queryRetailer = new Retailer();
+
+        queryRetailer.setCurrentPage(retailer.getCurrentPage());
+        queryRetailer.setPageSize(retailer.getPageSize());
+        queryRetailer.setStartPage(retailer.getStartPage());
+
+        queryRetailer.setStatus(-1);
+
+        return list(model, queryRetailer, null, null);
+    }
+
     @RequestMapping("/retailer/queryEditRetailer.action")
     public @ResponseBody
     Retailer queryEditRetailer(@RequestBody
     String id) {
 
         //因为传过来的json是一个对象
-        String idString = JSONObject.parseObject(id).getString(id);
+        String idString = JSONObject.parseObject(id).getString("id");
 
         return retailerService.get(idString);
     }
